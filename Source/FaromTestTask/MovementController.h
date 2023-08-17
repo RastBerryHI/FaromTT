@@ -17,12 +17,6 @@ class FAROMTESTTASK_API AMovementController : public APlayerController
 	UPROPERTY()
 	class APlayerPawn* PossessedPawn;
 
-	UPROPERTY()
-	TArray<AActor*> OutActors;
-
-	UPROPERTY(EditAnywhere, Category = "Initialization")
-	TSubclassOf<APlayerPawn> ActorClass;
-
 	ENetRole CurrentRole;
 public:
 	virtual void BeginPlay() override;

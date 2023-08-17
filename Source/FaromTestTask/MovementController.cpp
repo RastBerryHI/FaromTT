@@ -6,21 +6,6 @@
 void AMovementController::BeginPlay()
 {
 	Super::BeginPlay();
-
-	OutActors = {};
-	if (IsValid(ActorClass))
-	{
-		UGameplayStatics::GetAllActorsOfClass(GetWorld(), ActorClass, OutActors);
-		for (AActor* actor : OutActors)
-		{
-			APlayerPawn* InPawn = Cast<APlayerPawn>(actor);
-			if (!InPawn->IsPossessed)
-			{
-				Server_PlayerAuthPossess(InPawn);
-				return;
-			}
-		}
-	}
 }
 
 void AMovementController::SetupInputComponent()
@@ -37,6 +22,10 @@ void AMovementController::OnPossess(APawn* InPawn)
 
 void AMovementController::MoveHorizontal(float Value)
 {
+	if (!HasAuthority())
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Client move"));
+	}
 	if (PossessedPawn)
 	{
 		FVector Direction (0, Value, 0);
