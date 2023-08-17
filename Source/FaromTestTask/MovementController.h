@@ -23,7 +23,7 @@ class FAROMTESTTASK_API AMovementController : public APlayerController
 	UPROPERTY(EditAnywhere, Category = "Initialization")
 	TSubclassOf<APlayerPawn> ActorClass;
 
-
+	ENetRole CurrentRole;
 public:
 	virtual void BeginPlay() override;
 
