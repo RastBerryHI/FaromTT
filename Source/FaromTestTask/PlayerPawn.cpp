@@ -2,6 +2,7 @@
 
 
 #include "PlayerPawn.h"
+#include <Net/UnrealNetwork.h>
 
 APlayerPawn::APlayerPawn()
 {
@@ -15,6 +16,13 @@ void APlayerPawn::BeginPlay()
 {
 	Super::BeginPlay();
 	
+}
+
+void APlayerPawn::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
+{
+	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
+
+	DOREPLIFETIME_CONDITION(APlayerPawn, IsPossessed, COND_OwnerOnly);
 }
 
 void APlayerPawn::Tick(float DeltaTime)

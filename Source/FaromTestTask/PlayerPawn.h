@@ -24,8 +24,13 @@ class FAROMTESTTASK_API APlayerPawn : public APawn
 public:
 	APlayerPawn();
 
+	UPROPERTY(Replicated)
+	bool IsPossessed;
+
 protected:
 	virtual void BeginPlay() override;
+
+	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 
 public:	
 	virtual void Tick(float DeltaTime) override;

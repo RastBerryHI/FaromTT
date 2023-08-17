@@ -5,16 +5,18 @@
 
 void AMovementController::BeginPlay()
 {
+	Super::BeginPlay();
+
 	OutActors = {};
-	if (IsValid(ActorClass)) 
+	if (IsValid(ActorClass))
 	{
 		UGameplayStatics::GetAllActorsOfClass(GetWorld(), ActorClass, OutActors);
 		for (AActor* actor : OutActors)
 		{
-			APawn* InPawn = Cast<APawn>(actor);
-			if (!InPawn->GetController()) 
+			APlayerPawn* InPawn = Cast<APlayerPawn>(actor);
+			if (!InPawn->IsPossessed)
 			{
-				Possess(InPawn);
+				Server_PlayerAuthPossess(InPawn);
 				return;
 			}
 		}
@@ -40,4 +42,16 @@ void AMovementController::MoveHorizontal(float Value)
 		FVector Direction (0, Value, 0);
 		PossessedPawn->SetMovementDirection(Direction);
 	}
+}
+
+bool AMovementController::Server_PlayerAuthPossess_Validate(APlayerPawn* InPawn)
+{
+	return true;
+}
+
+void AMovementController::Server_PlayerAuthPossess_Implementation(APlayerPawn* InPawn)
+{
+	Possess(InPawn);
+
+	InPawn->IsPossessed = true;
 }
