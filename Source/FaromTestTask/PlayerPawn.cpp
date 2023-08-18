@@ -38,17 +38,5 @@ void APlayerPawn::MoveToLocation(float Delta)
 		const FVector NewLocation = GetActorLocation() + (MovementDirection * MovementSpeed * Delta);
 		SetActorLocation(NewLocation);
 	}
-
-	/*if (MovementDirection.IsZero())
-		return;
-
-	if (HasAuthority())
-	{
-		UE_LOG(LogTemp, Warning, TEXT("Server move"));
-	}
-	else
-	{
-		UE_LOG(LogTemp, Warning, TEXT("Client move"));
-	}*/
 }
 

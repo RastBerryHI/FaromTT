@@ -3,12 +3,22 @@
 
 #include "FaromTestTaskGameModeBase.h"
 #include "Kismet/GameplayStatics.h"
+#include "ABallZone.h"
+#include "BallSpawner.h"
+#include "Ball.h"
 
 void AFaromTestTaskGameModeBase::PostLogin(APlayerController* NewPlayer)
 {
-	TArray<AActor*> OutActors = {};
+	OutActors = {};
+	ZoneActors = {};
 
 	UGameplayStatics::GetAllActorsOfClass(GetWorld(), ActorClass, OutActors);
+	UGameplayStatics::GetAllActorsOfClass(GetWorld(), ZoneClass, ZoneActors);
 
 	NewPlayer->Possess(Cast<APawn>(OutActors[ConnectedPlayers++]));
+}
+
+void AFaromTestTaskGameModeBase::OnBallEnter(AABallZone* BallZone)
+{
+	UE_LOG(LogTemp, Warning, TEXT("Ball Enter"));
 }
