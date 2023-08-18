@@ -14,11 +14,16 @@ class FAROMTESTTASK_API AMovementController : public APlayerController
 {
 	GENERATED_BODY()
 
-	UPROPERTY()
+	UPROPERTY(Replicated)
 	class APlayerPawn* PossessedPawn;
 
 	ENetRole CurrentRole;
+
+	virtual void GetLifetimeReplicatedProps(TArray< FLifetimeProperty >& OutLifetimeProps) const override;
+
 public:
+	~AMovementController();
+
 	virtual void BeginPlay() override;
 
 	virtual void SetupInputComponent() override;

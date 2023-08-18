@@ -1,7 +1,12 @@
 
 #include "Kismet/GameplayStatics.h"
 #include "MovementController.h"
+#include "Net/UnrealNetwork.h"
 #include "PlayerPawn.h"
+
+AMovementController::~AMovementController()
+{
+}
 
 void AMovementController::BeginPlay()
 {
@@ -13,6 +18,12 @@ void AMovementController::SetupInputComponent()
 	Super::SetupInputComponent();
 
 	InputComponent->BindAxis("HorizontalMove", this, &AMovementController::MoveHorizontal);
+}
+
+void AMovementController::GetLifetimeReplicatedProps(TArray< FLifetimeProperty >& OutLifetimeProps) const 
+{
+	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
+	DOREPLIFETIME(AMovementController, PossessedPawn);
 }
 
 void AMovementController::OnPossess(APawn* InPawn)
