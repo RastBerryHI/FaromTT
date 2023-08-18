@@ -35,23 +35,23 @@ void AMovementController::MoveHorizontal(float Value)
 {
 	if (!HasAuthority())
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Client move"));
+		Server_PropogateMovement(Value);
 	}
+	else 
+	{
+		if (PossessedPawn)
+		{
+			FVector Direction(0, Value, 0);
+			PossessedPawn->SetMovementDirection(Direction);
+		}
+	}
+}
+
+void AMovementController::Server_PropogateMovement_Implementation(float Value)
+{
 	if (PossessedPawn)
 	{
-		FVector Direction (0, Value, 0);
+		FVector Direction(0, Value, 0);
 		PossessedPawn->SetMovementDirection(Direction);
 	}
-}
-
-bool AMovementController::Server_PlayerAuthPossess_Validate(APlayerPawn* InPawn)
-{
-	return true;
-}
-
-void AMovementController::Server_PlayerAuthPossess_Implementation(APlayerPawn* InPawn)
-{
-	Possess(InPawn);
-
-	InPawn->IsPossessed = true;
 }

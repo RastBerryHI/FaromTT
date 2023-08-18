@@ -32,8 +32,8 @@ public:
 
 	void MoveHorizontal(float Value);
 
-	UFUNCTION(Server, Reliable, WithValidation)
-	void Server_PlayerAuthPossess(APlayerPawn* InPawn);
-	bool Server_PlayerAuthPossess_Validate(APlayerPawn* InPawn);
-	void Server_PlayerAuthPossess_Implementation(APlayerPawn* InPawn);
+	UFUNCTION(Server, Reliable)
+	void Server_PropogateMovement(float Value);
+	void Server_PropogateMovement_Implementation(float Value);
+
 };
